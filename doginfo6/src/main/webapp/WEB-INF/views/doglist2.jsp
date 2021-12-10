@@ -137,7 +137,7 @@ $(".paginate_button a").on("click",function(e){
 							
 						<%-- 안됨<a href="#"><img class="card-img-top" src="C://upload/${list.fileName}" style="width:200%;" alt="..." /></a> --%>
 						<%-- 됨 원본코드<a href="#"><img class="card-img-top" src="<spring:url value='/image/${list.fileName}'/>" style="object-fit: scale-down" alt="..."/></a> --%>
-							 <a href="#"><img class="card-img-top" src="<spring:url value='/image/${list.fileName}'/>" style="object-fit:scale-down; width:350px; height:350px;" alt="<c:out value='${list.kind}'/>" title="<c:out value='${list.kind}'/>"/></a>
+							 <a href="#"><img class="card-img-top" src="<spring:url value='/image/${list.fileName}'/>" style="object-fit:scale-down; width:425px; height:400px;" alt="<c:out value='${list.kind}'/>" title="<c:out value='${list.kind}'/>"/></a>
 						<%-- 안됨<a href="#"><img class="card-img-top" src="C://upload/${list.fileName}" style="object-fit: scale-down" alt="..."/></a> --%>
 						<!-- 안됨<a href="#"><img class="card-img-top" src="resources/img/dog/닥스훈트.png" style="object-fit: scale-down" alt="..."></a> -->
 					
@@ -167,7 +167,8 @@ $(".paginate_button a").on("click",function(e){
 						
 						<!-- <div class="card-body"> 안에 위치해야 한다. -->
 						
-						<button data-oper='dogdetail' class="btn btn-outline-warning" onclick="location.href='/dogdetail?dno=<c:out value="${list.dno }"/>'">
+						<!-- <p style="text-align:center;"> -->
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button data-oper='dogdetail' class="btn btn-outline-warning" onclick="location.href='/dogdetail?dno=<c:out value="${list.dno }"/>'">
 						상세보기</button>
 						<%-- <button type="submit" id="detailBtn" class="btn btn-outline-warning">상세보기</button>
 						<input type="hidden" value="<c:out value='${list.dno}'/>"> --%><!--${registerdno} 값으로는 페이지 이동불가 -->

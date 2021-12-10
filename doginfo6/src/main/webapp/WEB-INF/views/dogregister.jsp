@@ -2,17 +2,62 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib uri="http://www.springframework.org/security/tags"
-	prefix="sec"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
 	
 	
 <script type="text/javascript">
-$(document).ready(function(){
-	$("#regBtn").on("click", function(){
-		self.location="/doglist";
-	});
+
+function Submit(){
 	
-});
+	if( form.simple.length > 65){
+		form.simple.focus();
+		alert('한줄 특징은 65글자 이하로 입력해주세요.');
+		return false;
+	}
+	
+	
+	// 파일 업로드 확장자 체크
+    if( $("#uploadfileName").val() != "" ){
+         var ext = $("#uploadfileName").val().split('.').pop().toLowerCase();
+ 	  if($.inArray(ext, ['gif','png','jpg','jpeg']) == -1) {
+ 	     alert('등록 할수 없는 파일명입니다.');
+ 	     $("#uploadfileName").val(""); // input file 파일명을 다시 지워준다.
+ 	     return;
+	  } //안쪽 if문
+    }// 바깥쪽 if문
+
+	
+	
+	/* function fileName(str){
+		n = str.replace(/,/g,"");
+		var _pattern1 = /^\d*[.]\d{1}$/; 
+		return n;
+	} */
+	
+	//품명DB 들어갈때 숫자 콤마제거-1
+	/* if( form.kind.value != "" ) {
+		var str = $("#kind").val();   
+	    return str.replace(/[^\d]+/g, '');
+	} */
+	//품명DB 들어갈때 문자열 콤마제거-2
+	 if( form.kind.value != "" ) {
+	 	var kind = $("#kind").val();
+		return kind.slice(0,-1);
+	 }
+		 	
+	//체중weight 소수점 첫째자리수까지만 DB insert
+	if( form.name.value != "" ) {
+    	var tmps = $("#weight").val().replace(/[^\.|^0(0)+|^0-9\.]/g, '');
+   		/* 소수점은 하나만 입력되도록*/
+        var arr = tmps.split(".");
+        if(arr.length > 2) {
+            tmps = arr[0] + '.' + arr[1];
+        } //안쪽 if문
+ 	   $("#weight").val(tmps);
+	}//바깥쪽 if문
+	
+document.getElementById("form").submit();
+}
 </script>
 	
 	
@@ -34,7 +79,7 @@ $(document).ready(function(){
 	<!-- Responsive navbar-->
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		<div class="container">
-			<a class="navbar-brand" href="#!">LOGO</a>
+			<a class="navbar-brand" href="/doglist2">LOGO</a>
 			<button class="navbar-toggler" type="button"
 				data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
 				aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -64,7 +109,7 @@ $(document).ready(function(){
 		</div>
 	</header>
       
-<form action="/dogregister" method="post" enctype="multipart/form-data">
+<form action="/dogregister" method="post" id="form" name="form" enctype="multipart/form-data" onsubmit="return Submit()">
 
 
 
@@ -72,7 +117,7 @@ $(document).ready(function(){
 	<div class="row">
 		<div class="col-lg-8"><!-- 없을경우 전체화면 가로차지한다 -->
 			<div class="card-header">강아지 이름을 입력하세요</div>
-			<input type="text" class="form-control" name="name" placeholder="강아지 이름을 입력하세요">
+			<input type="text" class="form-control" name="name" placeholder="강아지 이름을 입력하세요" required>
 		</div>
 	</div>
 </div>
@@ -82,7 +127,7 @@ $(document).ready(function(){
 	<div class="row">
 		<div class="col-lg-8"><!-- 없을경우 전체화면 가로차지한다 -->
 			<div class="card-header">강아지 체중을 입력하세요(소수점 첫자리까지만 입력해주세요)단위kg 생략</div>
-			<input type="text" class="form-control" name="weight" placeholder="강아지 체중을 입력하세요">
+			<input type="text" class="form-control" name="weight" id="weight" placeholder="강아지 체중을 입력하세요" required>
 		</div>
 	</div>
 </div>
@@ -170,7 +215,7 @@ $(document).ready(function(){
 		<div class="col-lg-8">
 			<div class="card-header">강아지 사진을 올려주세요</div>
 			<div class="form-group">
-				<label><input type="file" name="uploadfileName"> </label> 
+				<label><input type="file" name="uploadfileName" id="uploadfileName" required> </label> 
 			</div>
 		</div>
 	</div>
@@ -182,7 +227,7 @@ $(document).ready(function(){
 	<div class="row">
 		<div class="col-lg-8">
 			<div class="card-header">강아지 특징을 한줄로 요약해주세요</div>
-			<input type="text" name="simple" class="form-control" placeholder="한줄로 요약해주세요">
+			<input type="text" name="simple" class="form-control" placeholder="한줄로 요약해주세요" required>
 		</div>
 	</div>
 </div>
@@ -193,7 +238,7 @@ $(document).ready(function(){
 	<div class="row">
 		<div class="col-lg-8">
 			<div class="card-header">강아지 특징을 적어주세요</div>
-			<textarea class="form-control" name="feature" rows="7"></textarea>
+			<textarea class="form-control" name="feature" rows="7" required></textarea>
 		</div>
 	</div>
 </div>
@@ -229,10 +274,19 @@ $(document).ready(function(){
 	<div class="row">
 		<div class="col-lg-8">
 			<button type="submit" class="btn btn-warning">위 내용으로 분양 강아지를 등록합니다</button>
-			<button type="reset" class="btn btn-info">다시작성</button>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<button type="reset" class="btn btn-outline-primary">다시작성</button>
 			<!-- <button type="button" id="regBtn" class="btn btn-success">목록으로</button> -->
-			<button type="button" id="regBtn" class="btn btn-success" onclick="location.href='/doglist2'">목록으로</button>
+			<button type="button" id="regBtn" class="btn btn-outline-success" onclick="location.href='/doglist2'">목록으로</button>
 		</div>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
 	</div>
 </div>
 </form>

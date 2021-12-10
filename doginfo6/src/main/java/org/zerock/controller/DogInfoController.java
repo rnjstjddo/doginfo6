@@ -129,6 +129,62 @@ public class DogInfoController {
 		// rttr.addFlashAttribute("registerdno",dogInfoDTO.getDno());
 		return "redirect:/doglist2";
 	}
+	
+	
+	
+	// 한번에 3개 등록
+//		@PostMapping("/dogregister")
+//		// public String dogregisterpost(DogInfoDTO dogInfoDTO, RedirectAttributes rttr)
+//		// {
+//		public String dogregisterpost(DogInfoDTO dogInfoDTO, @RequestParam ("uploadfileName") MultipartFile [] uploadfileName) throws IOException {	
+//			log.info("PostMapping dogregister 분양등록 POST 방식 Controlle로 들어옴");	
+//			String path = "C:\\upload\\";
+//			
+//			
+//			
+//			System.out.println("uploadfileName" + uploadfileName);
+//			
+//			int i=0;
+//			for (i=0; i<uploadfileName.length; i++) {
+//			String originfileName =uploadfileName[i].getOriginalFilename();
+//			//MultipartFile originfileName =uploadfileName.getOriginalFilename(); MultipartFile 로 객체선언시 에러발생
+//			//MultipartFile originfileName = dogInfoDTO.getUploadfileName();
+//			//
+//			
+//			//String extension =FilenameUtils.getExtension(originfileName); // 확장자만 구하기 굳이 이걸왜 써야하는지
+//			UUID uuid = UUID.randomUUID(); // UUID 구하기 fileName = uuid + "." + ext;
+	//	
+//			String savefileName = uuid+originfileName;
+//			File saveFile = new File(path, savefileName);
+	//	
+//			if(saveFile.exists() == false ) {
+//				saveFile.mkdirs();
+//			}
+//			
+//			uploadfileName[i].transferTo(saveFile); //업로드한 파일을 특정한 파일로 저장하고 싶을때
+//			//MultipartFile 객체를 transferTo 해줘야 오류나지 않는다.
+	//	
+//			System.out.println(saveFile);
+	//
+//			
+//			dogInfoDTO.setFileName(savefileName);
+//			//FileName 에는 String타입이 와야하는데 File타입인 saveFile 들어오면 에러발생, DTO에서 타입을 String으로 지정.
+//			service.register(dogInfoDTO);
+//			
+//			log.info(dogInfoDTO);
+//			/*
+//			 * if (!uploadfileName.isEmpty()) { System.out.println(uploadfileName);
+//			 * 
+//			 * String originalFileName = uploadfileName.getOriginalFilename(); String ext =
+//			 * FilenameUtils.getExtension(originalFileName); // 확장자 구하기 UUID uuid =
+//			 * UUID.randomUUID(); // UUID 구하기 fileName = uuid + "." + ext;
+//			 * uploadfileName.transferTo(new File("D:\\upload\\" + fileName)); }
+//			 */
+//			}
+//			// rttr.addFlashAttribute("registerdno",dogInfoDTO.getDno());
+//			return "redirect:/doglist2";
+//		}
+
 
 	@GetMapping("/doglist2") // URI 입력시 분양리스트 화면만 보여준다.
 	public void doglistget(Model model) {
